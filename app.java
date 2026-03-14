@@ -8,7 +8,7 @@ public class app {
     public static void main(String[] args) {
 
         show_motion(1);
-
+        string file_content = "scan results : \n";
         String subnet = "";
         boolean port_scan = false;
         boolean ip_scan = false;
@@ -77,7 +77,6 @@ public class app {
             System.out.println("ip scan activated");
             scan_ip(subnet,port_scan,win,linux_server,macos);
         }
-
         if(port_scan){
 
             show_motion(2);
@@ -132,7 +131,7 @@ public class app {
                     System.out.println("port "+macos.get(z)+" is open");
 
                     String banner = grabBanner(subnet, macos.get(z));
-
+                        
                     if(banner != null){
                         System.out.println("banner: "+banner);
                     }
@@ -162,6 +161,8 @@ public class app {
             }
 
         }
+        System.out.println("scan finished,do you want to safe the results in a text file ? (y/n)");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public static boolean isPortOpen(String host, int port, int timeout) {
@@ -381,6 +382,14 @@ public class app {
          System.out.println(yellow+"The os guessing just happaned on the basis of ttl , for more advanced os guessing a port scan can be performed on the target ip and based on the open ports the os can be guessed more accurately, run the program with -p argument to perform a port scan on the target ip and get a more accurate os guessing"+reset);
             
 
+    }
+    public static void writeToFile(String filename, String text) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+        writer.write(text);
+        writer.newLine(); 
+    } catch (IOException e) {
+        System.out.println("Fehler beim Schreiben in Datei: " + e.getMessage());
+    }
     }
 
     public static void show_motion(int step){
